@@ -27,14 +27,23 @@ public class main : MonoBehaviour
 
     [Header("抵押额")]
     public float MortgageValue = 0;
+
     //抵押比例
     public float MortgageRatio = 0.5f;
+
+    [Header("总市值")]
+    public Text TotalMarketCapitalization = null;
+    public float TotalMarketCapitalizationValue = 0;
+
 
     void Start()
     {
 
     }
 
+    //--------------------------------------------------------
+    /// 计算保证金比例
+    //--------------------------------------------------------
     float GetGuaranteeRatioValue()
     {
         PriceValue = Convert.ToSingle(Price.text);
@@ -49,15 +58,33 @@ public class main : MonoBehaviour
         //保证金比例=1-欠款金额/抵押额
         GuaranteeRatioValue = (1 - ArrearsAmountValue / MortgageValue) * 100f;
 
+        GuaranteeRatio.text = GuaranteeRatioValue.ToString() + "%";
+
         return GuaranteeRatioValue;
     }
 
+    //--------------------------------------------------------
+    /// 计算总市值
+    //--------------------------------------------------------
+    float GetTotalMarketCapitalization()
+    {
+        //市值
+        float MarketValue = PriceValue * NumberValue;
 
+        TotalMarketCapitalizationValue = MarketValue - ArrearsAmountValue;
+
+        TotalMarketCapitalization.text = TotalMarketCapitalizationValue.ToString();
+
+        return TotalMarketCapitalizationValue;
+    }
 
     void Update()
     {
-        GuaranteeRatioValue = GetGuaranteeRatioValue();
-        GuaranteeRatio.text = GuaranteeRatioValue.ToString() +"%";
+
+        GetGuaranteeRatioValue();
+
+        GetTotalMarketCapitalization();
+
     }
 
 }
