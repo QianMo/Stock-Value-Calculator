@@ -36,11 +36,6 @@ public class main : MonoBehaviour
     public float TotalMarketCapitalizationValue = 0;
 
 
-    void Start()
-    {
-
-    }
-
     //--------------------------------------------------------
     /// 计算保证金比例
     //--------------------------------------------------------
@@ -55,6 +50,7 @@ public class main : MonoBehaviour
 
         //抵押额=市值 x 抵押比例
         MortgageValue = MortgageRatio * MarketValue;
+
         //保证金比例=1-欠款金额/抵押额
         GuaranteeRatioValue = (1 - ArrearsAmountValue / MortgageValue) * 100f;
 
@@ -80,11 +76,9 @@ public class main : MonoBehaviour
 
     void Update()
     {
-
         GetGuaranteeRatioValue();
 
         GetTotalMarketCapitalization();
-
     }
 
 }
