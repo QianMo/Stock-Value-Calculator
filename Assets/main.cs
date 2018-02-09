@@ -34,6 +34,8 @@ public class main : MonoBehaviour
     public float MortgageRatio = 0.5f;
     //该股票抵押比率(风控使用)
     const float STOCK_MORTGAGE_RATIO = 0.55f;
+    //汇率，RMB兑港币
+    const float ExchangeRate_HKD_To_RMB = 0.8f;
 
     [Header("过夜风控比率")]
     public Text OvernightRiskControlRatio = null;
@@ -50,6 +52,10 @@ public class main : MonoBehaviour
     [Header("总市值")]
     public Text TotalMarketCapitalization = null;
     public float TotalMarketCapitalizationValue = 0;
+
+    [Header("RMB总市值")]
+    public Text TotalRMBMarketCapitalization = null;
+    public float TotalRMBMarketCapitalizationValue = 0;
 
 
     //--------------------------------------------------------
@@ -91,6 +97,18 @@ public class main : MonoBehaviour
     }
 
     //--------------------------------------------------------
+    /// 计算RMB总市值
+    //--------------------------------------------------------
+    float GetTotalRMBMarketCapitalization()
+    {
+        TotalRMBMarketCapitalizationValue = TotalMarketCapitalizationValue * ExchangeRate_HKD_To_RMB;
+
+        TotalRMBMarketCapitalization.text = TotalRMBMarketCapitalizationValue.ToString();
+
+        return TotalMarketCapitalizationValue;
+    }
+
+    //--------------------------------------------------------
     /// 计算持有该股票市值
     //--------------------------------------------------------
     float GetStockMarketCapitalization()
@@ -102,6 +120,7 @@ public class main : MonoBehaviour
 
         return StockMarketCapitalizationValue;
     }
+
 
 
     //--------------------------------------------------------
@@ -135,7 +154,6 @@ public class main : MonoBehaviour
 
     void Update()
     {
-
         //计算持有该股票市值
         GetStockMarketCapitalization();
 
@@ -150,6 +168,9 @@ public class main : MonoBehaviour
 
         //计算总市值
         GetTotalMarketCapitalization();
+
+        //计算RMB总市值
+        GetTotalRMBMarketCapitalization();
     }
 
 }
